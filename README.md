@@ -183,5 +183,6 @@ For each pair:
 ✅ Pair names credited in README
 ✅ Push verified at github.com (you walk the room and check the green checkmark)
 If any pair is missing the push at 15:30, hold them through the break. Day 7 morning depends on this file. No mentor leaves without a push.
-<img width="1907" height="920" alt="image" src="https://github.com/user-attachments/assets/5b0ebdf9-d9db-40f1-bbd6-71de64696ed0" />
+<img width="1908" height="920" alt="Screenshot 2026-05-25 140324" src="https://github.com/user-attachments/assets/5718a76a-1f4f-4471-bcda-ef91ad55c528" />
+
 
