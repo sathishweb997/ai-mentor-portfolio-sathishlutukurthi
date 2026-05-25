@@ -159,6 +159,6 @@ If a pair has fewer than 4 résumés succeeding, sit with them for 5 minutes —
 - `data/jds.jsonl` — output of this sprint, input for Day 7 RAG
 
 ### Pair: <Mentor 1 name> + <Mentor 2 name>
-git add Day6_PlacementProcessor.ipynb data/jds.jsonl README.md
+git add Day6_B_PlacementProcessor.ipynb data/jds.jsonl README.md
 git commit -m "Day 6 Sprint 1: PlacementDataProcessor — JD URL to JSON"
 git push
