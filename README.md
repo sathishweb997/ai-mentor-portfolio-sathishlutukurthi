@@ -162,3 +162,24 @@ If a pair has fewer than 4 résumés succeeding, sit with them for 5 minutes —
 git add Day6_B_PlacementProcessor.ipynb data/jds.jsonl README.md
 git commit -m "Day 6 Sprint 1: PlacementDataProcessor — JD URL to JSON"
 git push
+Common bugs + recovery
+Naukri 403 (scraping blocked) → switch to cached. Document in README.
+Gemini 429 mid-batch → either wait or switch to backup key. The afternoon doesn't have time to wait long; pre-stage backup.
+JD has no CGPA but Pydantic raises → check Optional was on min_cgpa: Optional[float] = None. Common miss.
+JD scrape returns mostly navigation HTML → improve scraping selector (find the JD content div), OR accept noisy input and let Gemini extract what's there.
+Two pairs end up with 0 valid JDs → scraping issue. Pause both pairs. Switch to cached data. Note in README that cached was used.
+Trainer notes
+Pair work continues from Lab 6A. Same pair through Day 12. Drive/review every 30 min.
+Walk the room continuously. Sprint 1 is where the capstone starts. A pair that falls behind today falls behind for 5 days.
+The teaching moment is "real-world resilience". When Naukri blocks, mentors learn to fall back to cached data. This is what their students will face. Tomorrow's RAG sprint depends on jds.jsonl existing — ensure it does, even if cached.
+The Engineer Answer is your Day 12 teach-back currency. Be strict on specificity. "We extract data from JDs" is generic and gets a 0. "We use response_schema with Pydantic to enforce 7-field JD JSON, with retry-on-validation-failure" is specific and gets a 1.
+Acceptance verification at 15:25: project github.com//ai-mentor-portfolio. Show the green checkmark + jds.jsonl file. This is what every pair needs.
+Acceptance check (final 5 min — mandatory before break)
+For each pair:
+
+✅ Day6_PlacementProcessor.ipynb runs end-to-end
+✅ data/jds.jsonl in repo with ≥3 valid JDs
+✅ Engineer Answer in README with all 5 questions answered specifically
+✅ Pair names credited in README
+✅ Push verified at github.com (you walk the room and check the green checkmark)
+If any pair is missing the push at 15:30, hold them through the break. Day 7 morning depends on this file. No mentor leaves without a push.
