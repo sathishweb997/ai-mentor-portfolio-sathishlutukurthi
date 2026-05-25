@@ -84,4 +84,52 @@ If any item missing, pair the mentor for the last 5 minutes. The Pydantic + Gemi
 1. **API:** for low-volume, occasional calls. Avoids download. Cold-start risk on first call after idle.
 2. **Local:** for batch processing 100+ items, where you want predictable latency and don't pay per call.
 3. **Production rule of thumb:** if your usage exceeds the API free tier (~30K requests/month at HF), self-host. Otherwise API.
-4. 
+
+
+## Day 6 Lab 6A — Errors handled
+
+1. **Markdown fence wrapping** (`\`\`\`json ... \`\`\``)
+   The retry prompt asks Gemini to output raw JSON without fences. Triggers on ~5-10% of calls.
+
+2. **Hallucinated phone number when source has none**
+   `Optional[str] = None` in Pydantic — model returns `null`, schema validates.
+
+3. **Empty / whitespace-only input**
+   Pydantic raises ValidationError with "Field required". Caller catches.
+
+**Hallucination on garbage input:** Gemini sometimes invents a plausible résumé from non-résumé text. Defence: validate input before sending (e.g., minimum length, presence of email-like pattern).
+```
+
+**Acceptance:** README documents the errors with reasoning.
+
+---
+
+## Common bugs + recovery
+
+- **Markdown ```json fences in output** despite mime type → retry handles. If still failing, set `temperature=0` in config.
+- **`Pydantic ValidationError: name Field required`** on a real résumé → add explicit hint to prompt: "The first line is the candidate's name."
+- **`429 Resource exhausted` mid-batch** → wait 60s + retry, OR switch to backup key. The afternoon Sprint 1 wires Groq fallback to handle this automatically.
+- **Hallucinated résumé from garbage** → flag in the room. This is the foundation of the Day 8 red-team: input sanity checks before LLM calls.
+
+---
+
+## Trainer notes
+
+1. **Pair-work rule:** swap driver every 30 min. The reviewer catches mistakes the driver misses. After this lab, the same pair stays through Day 12.
+2. **The teaching moment is `response_schema` vs "please return JSON".** Show it live: remove `response_schema` from cell 3 and run on résumé 4 (sparse). Model invents fields. Put `response_schema` back. Model now returns `null` for missing fields.
+3. **Surface 2 mentors' results on the projector at 12:45.** Compare extraction quality across pairs. Where did the same résumé produce different `skills` lists? Discussion: extraction is partly subjective.
+4. **Connect to Day 6 afternoon (Sprint 1).** "We just extracted résumés. This afternoon we use the same pattern on Job Descriptions. Schema-first. Production-grade."
+5. **The garbage-input hallucination is the most pedagogically rich moment.** Mentors who watch Gemini invent a résumé out of "the quick brown fox" never forget the lesson: verify inputs before LLM calls.
+
+---
+
+## Acceptance check (final 5 min)
+
+For each pair:
+- ✅ Notebook runs end-to-end without uncaught errors
+- ✅ ≥4 of 5 résumés processed successfully
+- ✅ Empty + whitespace inputs handled gracefully
+- ✅ README documents the 3 errors handled with technical reasoning
+- ✅ Notebook pushed (each pair pushes to ONE pair-member's repo for the lab; afternoon Sprint 1 starts the capstone arc)
+
+If a pair has fewer than 4 résumés succeeding, sit with them for 5 minutes — usually a Pydantic schema issue (missing Optional somewhere).
